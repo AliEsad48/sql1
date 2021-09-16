@@ -1,0 +1,80 @@
+CREATE TABLE personelTT
+    (
+        id NUMBER(9),
+        isim VARCHAR2(50),
+        sehir VARCHAR2(50),
+        maas NUMBER(20),
+        sirket VARCHAR2(20)
+    );
+    
+    
+    INSERT INTO personelTT VALUES(123456789, 'Ali Seker', 'Istanbul', 2500, 'Honda');
+    INSERT INTO personelTT VALUES(234567890, 'Ayse Gul', 'Istanbul', 1500, 'Toyota');
+    INSERT INTO personelTT VALUES(345678901, 'Veli Yilmaz', 'Ankara', 3000, 'Honda');
+    INSERT INTO personelTT VALUES(456789012, 'Veli Yilmaz', 'Izmir', 1000, 'Ford');
+    INSERT INTO personelTT VALUES(567890123, 'Veli Yilmaz', 'Ankara', 7000, 'Hyundai');
+    INSERT INTO personelTT VALUES(456789012, 'Ayse Gul', 'Ankara', 1500, 'Ford');
+    INSERT INTO personelTT VALUES(123456710, 'Fatma Yasa', 'Bursa', 2500, 'Honda');
+    
+    CREATE TABLE sirketlerT
+    (
+        sirket_id NUMBER(9),
+        sirket_adi VARCHAR2(20),
+        personel_sayisi NUMBER(20)
+    );
+    
+    
+    INSERT INTO sirketlerT VALUES(100, 'Honda', 12000);
+    INSERT INTO sirketlerT VALUES(101, 'Ford', 18000);
+    INSERT INTO sirketlerT VALUES(102, 'Hyundai', 10000);
+    INSERT INTO sirketlerT VALUES(103, 'Toyota', 21000);
+    INSERT INTO sirketlerT VALUES(104, 'Mazda', 17000);
+    
+
+    SELECT *FROM sirketlerT;
+    SELECT * FROM personelTT;
+  
+  SELECT isim, maas , sirket FROM personelTT
+  WHERE sirket IN( SELECT sirket_adi FROM sirketlerT
+  WHERE personel_sayisi >15000);
+
+                    
+  SELECT isim, maas, sehir FROM personelTT                  
+   where sirket IN(SELECT sirket_adi FROM sirketlerT
+                   where sirket_id >101);                
+  
+  SELECT sirket_id, personel_sayisi FROM sirketlerT
+  WHERE sirket_adi IN(SELECT sirket_adi FROM personelTT
+  WHERE sehir='Ankara');
+
+    SELECT sirket_adi, personel_sayisi, (SELECT SUM(maas) FROM personelTT
+    WHERE personelTT.sirket=sirketlerT.sirket_adi) toplam_maas                
+      FROM sirketlerT;              
+                    
+      SELECT sirket_adi, personel_sayisi, (SELECT ROUND(AVG(maas)) FROM personelTT
+      WHERE sirket=sirket_adi)AS ort_maas FROM sirketlerT;
+                    
+       --ORNEK6: Her þirketin ismini, personel sayýsýný ve o þirkete ait personelin
+--maksimum ve minumum maaþýný listeleyen bir Sorgu yazýnýz.
+
+SELECT sirket_adi,personel_sayisi , (SELECT MAX(maas) from personel
+                                        WHERE sirket_adi=sirket )AS max_maas,
+                                        (SELECT MIN(maas) from personel
+                                        WHERE sirket_adi=sirket)AS min_maas
+                                        FROM sirketler;
+
+SELECT sirket_id , sirket_adi , (SELECT COUNT(sehir )from personel
+                                    WHERE sirket=sirket_adi)AS sehir_sayisi
+                            
+FROM sirketler;    
+
+SELECT sirket_adi, personel_sayisi, (SELECT MAX(maas) FROM personelTT 
+WHERE sirket=sirket_adi) AS max_maas,
+(SELECT MIN(maas) FROM personelTT
+WHERE sirket=sirket_adi) min_maas FROM sirketlerT;
+
+  SELECT sirket_id , sirket_adi , (SELECT COUNT(sehir) from personelTT
+  WHERE sirket=sirket_adi) AS sehir_sayisi FROM sirketlerT;
+  
+  
+  

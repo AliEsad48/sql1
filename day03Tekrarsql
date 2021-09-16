@@ -1,0 +1,142 @@
+CREATE TABLE sehirlerT(
+alan_kodu CHAR(3),
+isim VARCHAR2(50),
+nufus NUMBER(8,0) CHECK (nufus>1000)
+);
+INSERT INTO sehirlerT VALUES ('312', 'ANKARA', 5750000);
+INSERT INTO sehirlerT VALUES ('232', 'Izmir', 375);
+INSERT INTO sehirlerT VALUES ('232', 'Izmir', 3750000);
+INSERT INTO sehirlerT VALUES ('436', 'Maras', null);
+
+SELECT * FROM sehirlerT;
+drop table sehirlerT;
+
+vergi_no NUMBER(3),
+firma_ismi VARCHAR2(50),
+irtibat_ismi VARCHAR2(50),
+
+  CREATE TABLE ogrencilerTT(
+  id NUMBER(9),
+  isim VARCHAR2(50),
+  adres VARCHAR2(100),  
+  sinav_notu NUMBER(3)
+  );
+  INSERT INTO ogrencilerTT VALUES('123', 'ali can', 'ankara', 75);
+  INSERT INTO ogrencilerTT VALUES('124', 'merve gul', 'ankara', 85);
+  INSERT INTO ogrencilerTT VALUES('125', 'ahmerd yasa', 'izmir', 85);
+  
+  SELECT * FROM ogrencilerTT;
+  DROP TABLE ogrencilerTT;
+ 
+  SELECT * FROM ogrencilerTT
+  where sinav_notu >80;
+  
+  select isim, adres from ogrencilerTT 
+  where adres='ankara';
+  
+  delete from ogrencilerTT 
+  where id = '124';
+  
+  ------------------select-BETWEEN--------------
+  
+  create table personelT(
+  id char(5),
+  isim varchar2(50),
+  maas number(5)
+  );
+  drop table personelT;
+  
+  INSERT INTO personelT VALUES('10001', 'Ahmet Aslan', 7000);
+  INSERT INTO personelT VALUES( '10002', 'Mehmet Yýlmaz' ,12000);
+    INSERT INTO personelT VALUES('10003', 'Meryem ', 7215);
+    INSERT INTO personelT VALUES('10004', 'Veli Han', 5000);
+    INSERT INTO personelT VALUES('10005', 'Mustafa Ali', 5500);
+    INSERT INTO personelT VALUES('10005', 'Ayþe Can', 4000);
+    
+SELECT * FROM personelT;
+SELECT * FROM personelT
+WHERE id BETWEEN '10002' AND '10005';
+
+ --2.yontem :
+  
+SELECT * FROM personelT
+where id>='10002' AND id <='10005';
+
+select * from personelT
+where isim between 'Mehmet Yýlmaz' and 'Veli Han';
+
+SELECT id, maas FROM personelT
+where id NOT BETWEEN '10002' and '10004';
+
+SELECT * FROM personelT
+WHERE maas IN (4000, 5000, 7000);
+
+SELECT * FROM personelT
+WHERE isim In ('Veli Han', 'Ahmet Aslan');
+
+   SELECT * FROM personelT
+   WHERE isim LIKE 'A%';
+   
+   select * from personelT
+   where isim LIKE'%n';
+   
+   select * from personelT
+   where isim LIKE'_e%';
+   
+   select * from personelT
+   where isim LIKE'_e%y%';
+   
+   select * from personelT
+   where isim NOT LIKE'A%';
+   
+   select * from personelT
+   where isim NOT LIKE '%a%';
+   
+   select * from personelT
+   where maas NOT LIKE'%00';
+   
+   select * from personelT
+   where maas LIKE'_____';
+   
+   select * from personelT
+   where isim LIKE'M___M';
+   
+  CREATE TABLE kelimelerT(
+        id NUMBER(10) UNIQUE,
+        kelime VARCHAR2(50) NOT NULL,
+        harf_sayisi NUMBER(6)
+    );
+    INSERT INTO kelimelerT VALUES (1001, 'hot', 3);
+    INSERT INTO kelimelerT VALUES (1002, 'hat', 3);
+    INSERT INTO kelimelerT VALUES (1003, 'hit', 3);
+    INSERT INTO kelimelerT VALUES (1004, 'hbt', 3);
+    INSERT INTO kelimelerT VALUES (1005, 'hct', 3);
+    INSERT INTO kelimelerT VALUES (1006, 'adem', 4);
+    INSERT INTO kelimelerT VALUES (1007, 'selim', 5);
+    INSERT INTO kelimeler VALUES (1008, 'yusuf', 5);
+    INSERT INTO kelimelerT VALUES (1009, 'hip', 3);
+    INSERT INTO kelimelerT VALUES (1010, 'HOT', 3);
+    INSERT INTO kelimelerT VALUES (1011, 'hOt', 3);
+    INSERT INTO kelimelerT VALUES (1012, 'h9t', 3);
+    INSERT INTO kelimelerT VALUES (1013, 'hoot', 4);
+    INSERT INTO kelimelerT VALUES (1014, 'haaat', 5);
+    
+ select * from kelimelerT
+ where REGEXP_LIKE(kelime,'hi');
+ 
+ select * from kelimelerT
+ where REGEXP_LIKE (kelime,'ot|at', 'i');
+ 
+ select * from kelimelerT
+ where REGEXP_LIKE(kelime,'^hi|^ho', 'i');
+ 
+ select * from kelimelerT
+ where REGEXP_LIKE (kelime, 't$|m$', 'i');
+ 
+select * from kelimelerT
+where REGEXP_LIKE(kelime,'h[a-zA-Z0-9]t', 'i' );
+
+select * from kelimelerT
+where REGEXP_LIKE (kelime, 'm|e|i');
+
+

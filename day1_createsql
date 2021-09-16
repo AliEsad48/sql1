@@ -1,0 +1,32 @@
+--TABLO OLUSTURMA----
+CREATE TABLE student
+(
+id CHAR(4),
+name VARCHAR(20),
+age NUMBER
+);
+
+--VERI GÝRÝSÝ----
+INSERT INTO student VALUES('1003','MEHMET AK',25);
+INSERT INTO student VALUES ('1004','AHMED',15);
+
+SELECT * FROM student;
+
+--tablo silme---
+DROP TABLE student;
+
+
+--PARCALI VERÝ GÝRÝSÝ----
+INSERT INTO student (ýd,name) VALUES ('1003','FATMA');
+
+DROP TABLE URUNLER;
+
+CREATE TABLE Urunler1(
+urunA_id NUMBER,
+Urun1name VARCHAR(50),
+fiyat NUMBER
+);
+INSERT INTO urunler values(100,'cips',5);
+INSERT INTO urunler values(200,'kola',6);
+
+SELECT * FROM Urunler;

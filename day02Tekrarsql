@@ -1,0 +1,133 @@
+--ORNEK 1 NOT NULL
+
+CREATE TABLE ogrenciler1(
+id char(4) not null,
+isim varchar(50),
+not_ort number(4,2),--98,55
+kayit_tarihi date
+);
+drop table ogrencilerTT;
+
+INSERT INTO ogrenciler1 VALUES('1234', 'hasan', 75.25, '14-01-2020');
+INSERT INTO ogrenciler1 VALUES('1234', 'aise', null, null);
+INSERT INTO ogrenciler1 VALUES(null, 'osman', 45.25, '4-01-2020');--ORA-01400: cannot insert NULL into ("HR"."OGRENCILER1"."ID")
+
+SELECT * FROM ogrenciler1;
+
+--ORNEK 2 UNÝQUE
+--tedarikciler olusturalim id unique olsun
+
+create table tedarikciler1(
+
+id char (4) UNIQUE,
+isim varchar(50),
+adres varchar(100),
+tarih date
+);
+
+INSERT INTO tedarikciler1 VALUES ('1234','ayse','mehmet mah izmir','10-11-2020' );
+INSERT INTO tedarikciler1 VALUES ('1234','fatma','veli mah istanbul','5-11-2020' );--ORA-00001: unique constraint (HR.SYS_C007481) violated
+INSERT INTO tedarikciler1 VALUES (null,'cem','süvari mah denizli','5-11-1997' );
+INSERT INTO tedarikciler1 VALUES (null,'can','zeki mah mus','5-11-1998' );
+
+drop table tedarikciler1;
+select * from tedarikciler;
+
+--ornek3 primary key
+
+CREATE TABLE personel1(
+id char (5) PRIMARY KEY,
+isim varchar (50) UNIQUE,
+maas NUMBER(5) NOT NULL,
+ise_baslama date
+);
+
+INSERT INTO personel1 VALUES('10001', 'Ahmet Aslan',7000, '13-04-2018');
+    INSERT INTO personel1 VALUES( '10001', 'Mehmet Yýlmaz' ,12000, '14-04-18');--hata alýr
+    INSERT INTO personel1 VALUES('10003', '', 5000, '14-04-18');
+    INSERT INTO personel1 VALUES('10004', 'Veli Han', 5000, '14-04-18');
+    INSERT INTO personel1 VALUES('10005', 'Ahmet Aslan', 5000, '14-04-18'); --hata alýr
+    INSERT INTO personel1 VALUES(NULL, 'Canan Yas', NULL, '12-04-19');-- null olmaz
+    
+    select * from personel1;
+    
+    CREATE TABLE ogrencilerT(
+    ogrenci_id char(4) PRIMARY KEY,
+    Isým_soyisim varchar2(50),
+    not_ort number (5,2),
+    kayit_tarihi date 
+  );
+    SELECT * FROM ogrencilerT;
+    
+    INSERT INTO ogrencilerT VALUES ('1234', 'hasan yaman',75.70,'14-01-2020');
+    INSERT INTO ogrencilerT VALUES (null, 'veli yaman',85.70,'14-01-2020'); -- id null olamaz
+    INSERT INTO ogrencilerT VALUES ('1234', 'Ali Can',55.70,'14-06-2020'); -- id benzersiz olmalý, daha önceverilen id kullanýlamaz
+    INSERT INTO ogrencilerT (isim_soyisim) VALUES ( 'Veli Cem'); -- id vermeden baþka þeyler vermeye geçemezsin, default null atar, buda primary ye uymaz
+    INSERT INTO ogrencilerT (ogrenci_id) VALUES ( '5687');
+    
+    create table calisanlarT(
+    id char (5),
+    isim varchar (50) UNIQUE,
+    maas number (5) NOT Null,
+    CONSTRAINT id_primary1 PRIMARY KEY(id)
+    );
+    INSERT INTO calisanlarT VALUES('10001', 'Ahmet Aslan',7000);
+    INSERT INTO calisanlarT VALUES( '10002', 'Mehmet Yýlmaz' ,12000);
+    INSERT INTO calisanlarT VALUES('10003', 'CAN', 5000);
+    
+    
+    SELECT * FROM CALISANLART;
+    
+    create table adreslerT(
+adres_id char(5),
+sokak varchar(30),
+cadde varchar(30),
+sehir varchar(15),
+CONSTRAINT id_foreign FOREIGN KEY(adres_id)REFERENCES calisanlarT(id)
+
+);
+    drop table adreslerT;
+    
+   INSERT INTO adreslerT VALUES('10001','Mutlu Sok', '40.Cad.','IST');
+    INSERT INTO adreslerT VALUES('10001','Can Sok', '50.Cad.','Ankara');
+    INSERT INTO adreslerT VALUES('10002','Aða Sok', '30.Cad.','Antep');
+    INSERT INTO adreslerT VALUES('','Aða Sok', '30.Cad.','Antep');
+    INSERT INTO adreslerT VALUES('','Aða Sok', '30.Cad.','Antep');
+    INSERT INTO adreslerT VALUES('10004','Gel Sok', '60.Cad.','Van');
+ 
+ select * from calisanlarT;
+ SELECT * FROM adreslerT;
+    drop table calisanlarT;
+    drop table adreslerT;
+    
+    create table ogrencilerTT(
+    id char(4),
+    isim varchar (20),
+    not_ort number (5,2),
+    kayit_tarihi date,
+    CONSTRAINT ogrencilerTT_prýmary PRIMARY KEY (id,isim)    
+    );
+    select * from ogrencilerTT;
+    drop table ogrencilerT;
+    
+    INSERT INTO ogrencilerTT VALUES (null,'Veli Cem',90.6,,'15-05-2019'); -- ORA-01400: cannot insert NULL into ("HR"."OGRENCILER5"."ID")
+INSERT INTO ogrencilerTT VALUES (1234,null,90.6,'15-05-2019'); -- ORA-01400: cannot insert NULL into ("HR"."OGRENCILER5"."ISIM")
+INSERT INTO ogrencilerTT VALUES (1234,'Ali Can',90.6,'15-05-2019'); -- PK= 1234Ali Can
+INSERT INTO ogrencilerTT VALUES (1234,'Veli Cem',90.6,'15-05-2019'); -- PK=1234Veli Cem
+INSERT INTO ogrencilerTT VALUES (1234,'Oli Can',90.6,'15-05-2019');
+
+create table tedarikcilerT(
+tedarikci_id char(4),
+tedarikci_ismi varchar (20),
+iletisim_ismi varchar(20),
+CONSTRAINT tedarikcilerT_pk PRIMARY KEY(tedarikci_id, tedarikci_ismi)
+);
+create table urunlerTT(
+tedarikci_id char(4),
+urun_id varchar(5),
+yas number,
+CONSTRAINT urunlerTT_fk FOREIGN KEY (tedarikci_id, urun_id)REFERENCES tedarikcilerT
+);
+select * from tedarikcilerTT;
+select * from urunlerTT;
+--INSERT INTO VALUES

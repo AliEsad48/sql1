@@ -1,0 +1,46 @@
+CREATE TABLE sirketlerþ
+    (
+        sirket_id NUMBER(9), 
+        sirket_isim VARCHAR2(20)
+    );
+    
+    INSERT INTO sirketlerþ VALUES(100, 'Toyota');
+    INSERT INTO sirketlerþ VALUES(101, 'Honda');
+    INSERT INTO sirketlerþ VALUES(102, 'Ford');
+    INSERT INTO sirketlerþ VALUES(103, 'Hyundai');
+    
+    CREATE TABLE siparislers
+    (
+        siparis_id NUMBER(9),
+        sirket_id NUMBER(9), 
+        siparis_tarihi DATE
+    );
+    
+    INSERT INTO siparislers VALUES(11, 101, '17-04-2020');
+    INSERT INTO siparislers VALUES(22, 102, '18-04-2020');
+    INSERT INTO siparislers VALUES(33, 103, '19-04-2020');
+    INSERT INTO siparislers VALUES(44, 104, '20-04-2020');
+    INSERT INTO siparislers VALUES(55, 105, '21-04-2020');
+
+    SELECT * FROM siparislers;
+    SELECT * FROM sirketlerþ;
+    
+    /* -----------------------------------------------------------------------------
+  ORNEK1: sirketler ve siparisler adýndaki tablolarda yer alan sirket_isim, 
+  siparis_id ve siparis_tarihleri listeleyen bir sorgu yaziniz.
+------------------------------------------------------------------------------*/ 
+    
+    SELECT S.sirket_isim, sp.siparis_id, sp.siparis_tarihi, sp.sirket_id
+    FROM sirketlerþ S
+    FULL JOIN siparisler  sp
+    ON S.sirket_id=sp.sirket_id;
+     
+    /* -----------------------------------------------------------------------------
+  ORNEK2: Iki Tabloda sirket_id’si ayni olanlarin sirket_ismi, siparis_id ve 
+  siparis_tarihleri listeleyen bir sorgu yaziniz.
+------------------------------------------------------------------------------*/  
+    SELECT S.sirket_ýsim, sp.siparis_ýd, sp.siparis_tarihi, sp.sirket_ýd
+    FROM sirketlerþ S
+    INNER JOIN siparislers sp
+    ON S.sirket_ýd= sp.sirket_ýd;
+      
